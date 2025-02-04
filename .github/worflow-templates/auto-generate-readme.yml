@@ -1,3 +1,4 @@
+# Version: 1.0.1
 name: Auto Generate README
 
 on:
@@ -7,7 +8,7 @@ on:
       - master
     paths-ignore:
       - 'README.md'
-  workflow_dispatch:  # Permite execução manual
+  workflow_dispatch:
 
 jobs:
   generate-readme:
@@ -43,8 +44,11 @@ jobs:
           GITHUB_ORG: '4success'
           LLM_PROVIDER: 'claude'
           LLM_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          GIT_CREDENTIALS: https://x-access-token:${{ secrets.README_TOKEN }}@github.com
         run: |
           cd github-readme-generator
+          git config --global credential.helper store
+          echo "$GIT_CREDENTIALS" > ~/.git-credentials
           ts-node src/index.ts --single-repo ${{ github.event.repository.name }}
 
       - name: Commit README if Changed
