@@ -1,0 +1,6 @@
+{
+    "name": "Auto Generate README",
+    "description": "Automatically generates README.md using LLM for repositories starting with 'th-'",
+    "iconName": "octicon book",
+    "categories": ["documentation", "automation"]
+}
